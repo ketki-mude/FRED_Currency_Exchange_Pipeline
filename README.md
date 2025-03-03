@@ -51,13 +51,5 @@ This project automates the ingestion, transformation, and validation of currency
 - These datasets are updated regularly via automated Snowflake tasks and integrated CI/CD pipelines.
 
 ---
-## **📌 Contributions**
-| **Name**                           | **Contribution**                                                                                             |
-|------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| **Janvi Bharatkumar Chitroda**     | 33% - **Architecture & Data Pipeline Design**, overseeing ingestion from the FRED API, transformation using Snowpark, and Snowflake integration. |
-| **Ketki Mude**                     | 33% - **Dashboard & Environment Development**, focusing on the Streamlit dashboard for DEV/PROD selection and user experience.         |
-| **Sahil Mutha**                    | 33% - **Task Orchestration & Pipeline Automation**, managing Apache Airflow, DBT workflows, and automated data updates. |
-
----
 ## **📌 Attestation**
 **WE CERTIFY THAT WE HAVE NOT USED ANY OTHER STUDENTS' WORK IN OUR ASSIGNMENT AND COMPLY WITH THE POLICIES OUTLINED IN THE STUDENT HANDBOOK.**
