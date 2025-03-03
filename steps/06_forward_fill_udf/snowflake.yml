@@ -1,0 +1,15 @@
+definition_version: 1
+snowpark:
+  project_name: "FRED_Currency_Exchange"
+  stage_name: "HARMONIZED.my_stage"
+  src: "forward_fill_udf/"
+  functions:
+    - name: "FORWARD_FILL_UDF"
+      database: "FRED_DB"
+      schema: "HARMONIZED"
+      handler: "function.forward_fill"
+      runtime: "3.10"
+      signature:
+        - name: "input_array"  
+          type: "ARRAY"
+      returns: "ARRAY"

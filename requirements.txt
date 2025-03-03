@@ -1,0 +1,12 @@
+requests
+pandas
+boto3
+python-dotenv
+snowflake-connector-python
+snowflake-cli-labs
+pytest
+streamlit
+jaraco.text
+plotly
+importlib-metadata
+platformdirs

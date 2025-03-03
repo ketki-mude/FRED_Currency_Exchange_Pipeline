@@ -1,0 +1,63 @@
+name: Snowflake One-Time Setup
+
+on:
+  workflow_dispatch:
+    # Manual trigger only
+
+jobs:
+  snowflake-setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install snowflake-connector-python
+
+      - name: Run Snowflake setup
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+        run: |
+          python -c "
+          import snowflake.connector
+          import os
+
+          # Connect to Snowflake
+          conn = snowflake.connector.connect(
+              account=os.environ['SNOWFLAKE_ACCOUNT'],
+              user=os.environ['SNOWFLAKE_USER'],
+              password=os.environ['SNOWFLAKE_PASSWORD'],
+              warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
+              role=os.environ['SNOWFLAKE_ROLE']
+          )
+
+          # Read and execute the setup SQL file
+          with open('steps/02_setupSnowflake.sql', 'r') as f:
+              sql = f.read()
+              
+          cursor = conn.cursor()
+          # Execute each statement separately
+          for statement in sql.split(';'):
+              if statement.strip():
+                  try:
+                      cursor.execute(statement)
+                      print(f'Successfully executed: {statement[:50]}...')
+                  except Exception as e:
+                      print(f'Error executing: {statement[:50]}...')
+                      print(f'Error: {str(e)}')
+                  
+          cursor.close()
+          conn.close()
+          "
